@@ -25,29 +25,33 @@ to the require section of your `composer.json` file.
 
 Ldap configuration
 --------------------
-'params' => [
-  'ldap' => [
-    'hostname' => '127.0.0.1',
-		'port' => 389,
-		//'security' => 'SSL',
-		'bind_dn' => false,
-		'bind_password' => false,
-		'username' => 'admin',
-		'password' => 'admin',
-		'base_dn' => 'dc=example,dc=org',
-		'filter'  => '(&(objectClass=*))',
-		'user_base_dn' => 'cn=user,dc=example,dc=org',
-		'user_filter' => '(&(objectClass=inetOrgPerson))',
-		'group_base_dn' => 'cn=group,dc=example,dc=org',
-		'group_filter' => '(&(objectClass=*))',
-		'options' => [
-			LDAP_OPT_NETWORK_TIMEOUT => 30,
-			LDAP_OPT_PROTOCOL_VERSION => 3,
-			LDAP_OPT_REFERRALS => 0,
-		],
-  ]
-]
 
+    <?php ....
+    'params' => [
+        'ldap' => [
+            'hostname' => '127.0.0.1',
+            'port' => 389,
+            //'security' => 'SSL',
+            'bind_dn' => false,
+            'bind_password' => false,
+            'username' => 'admin',
+            'password' => 'admin',
+            'base_dn' => 'dc=example,dc=org',
+            'filter'  => '(&(objectClass=*))',
+            'user_base_dn' => 'cn=user,dc=example,dc=org',
+            'user_filter' => '(&(objectClass=inetOrgPerson))',
+            'group_base_dn' => 'cn=group,dc=example,dc=org',
+            'group_filter' => '(&(objectClass=*))',
+            'options' => [
+                LDAP_OPT_NETWORK_TIMEOUT => 30,
+                LDAP_OPT_PROTOCOL_VERSION => 3,
+                LDAP_OPT_REFERRALS => 0,
+            ],
+        ]
+    ]
+    ...
+    ?>
+    
 
 
 Search the LDAP
