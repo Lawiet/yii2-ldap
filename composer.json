@@ -12,7 +12,7 @@
     ],
     "require": {
         "yiisoft/yii2": "*",
-        "tiesa/ldap": "*"
+        "tiesa/ldap": "dev-master"
     },
     "autoload": {
         "psr-4": {
