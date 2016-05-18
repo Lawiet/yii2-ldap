@@ -113,3 +113,6 @@ and will automagically issue the right function calls for just performing those 
     $manager->delete($node);
 
     // Now it's gone
+
+
+See more: tiesa/ldap
