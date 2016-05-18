@@ -11,7 +11,7 @@ The preferred way to install this extension is through [composer](http://getcomp
 Either run
 
 ```
-php composer.phar require --prefer-dist lawiet/yii2-ldap "dev-master"
+php composer.phar require lawiet/yii2-ldap "dev-master"
 ```
 
 or add
