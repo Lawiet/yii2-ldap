@@ -21,7 +21,7 @@ or add
 "prefer-stable": true,
 require: {
 ...
-    "lawiet/yii2-ldap": "dev-master"
+    "lawiet/yii2-ldap": "@dev"
 ...
 }
 ```
