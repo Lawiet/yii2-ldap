@@ -50,6 +50,14 @@ class Ldap extends LdapFunctions {
     }
 
     /**
+     * getManager()
+     */
+    public function getManager()
+    {
+        return $this->tiesaManagerClass;
+    }
+
+    /**
      * generatePassword($password, $encode)
      */
     public static function generatePassword($password = '', $encode = 'ssha') {
@@ -84,6 +92,28 @@ class Ldap extends LdapFunctions {
     }
 
     /**
+     * setInNode($node, $object, $value)
+     */
+    public function setInNode($node = false, $object=false, $value)
+    {
+        return $this->_setInNode($node, $object, $value);
+    }
+
+    /**
+     * newUser($user, $dn)
+     */
+    public function newUser($user = 'uid=0', $dn = 'default'){
+        $options = $this->options['user_options'];
+        $user = $this->_setDn($user, $options['base_dn'], $dn);
+
+        $node = $this->_newNode($user);
+        $node = $this->setInNode($node, 'objectClass', ['top', 'person', 'organizationalPerson', 'inetOrgPerson', 'posixAccount', 'shadowAccount']);
+        $node = $this->setInNode($node, 'homeDirectory', '/home/users/' . $user);
+
+        return $node;
+    }
+
+    /**
      * getUser($user, $dn)
      */
     public function getUser($user = 'uid=0', $dn = 'default'){
@@ -102,6 +132,19 @@ class Ldap extends LdapFunctions {
         $filter = $this->_getDefault($options['filter'], $filter);
 
         return $this->_search($user, $filter);
+    }
+
+    /**
+     * newGroup($user, $dn)
+     */
+    public function newGroup($user = 'uid=0', $dn = 'default'){
+        $options = $this->options['group_options'];
+        $user = $this->_setDn($user, $options['base_dn'], $dn);
+
+        $node = $this->_newNode($user);
+        $node = $this->setInNode($node, 'objectClass', ['top', 'posixGroup', 'shadowAccount']);
+
+        return $node;
     }
 
     /**
