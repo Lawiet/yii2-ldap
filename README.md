@@ -17,7 +17,13 @@ php composer.phar require lawiet/yii2-ldap "dev-master"
 or add
 
 ```
-"lawiet/yii2-ldap": "dev-master"
+"minimum-stability": "dev",
+"prefer-stable": true,
+require: {
+...
+    "lawiet/yii2-ldap": "dev-master"
+...
+}
 ```
 
 to the require section of your `composer.json` file.
