@@ -44,10 +44,14 @@ Ldap configuration
             'password' => 'admin',
             'base_dn' => 'dc=example,dc=org',
             'filter'  => '(&(objectClass=*))',
-            'user_base_dn' => 'cn=user,dc=example,dc=org',
-            'user_filter' => '(&(objectClass=inetOrgPerson))',
-            'group_base_dn' => 'cn=group,dc=example,dc=org',
-            'group_filter' => '(&(objectClass=*))',
+            'user_options' => [
+                'base_dn' => 'cn=user,dc=example,dc=org',
+                'filter' => '(&(objectClass=inetOrgPerson))',
+            ],
+            'group_options' => [
+                'base_dn' => 'cn=group,dc=example,dc=org',
+                'filter' => '(&(objectClass=*))',
+            ],
             'options' => [
                 LDAP_OPT_NETWORK_TIMEOUT => 30,
                 LDAP_OPT_PROTOCOL_VERSION => 3,
