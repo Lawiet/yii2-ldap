@@ -11,7 +11,7 @@
         }
     ],
     "require": {
-        "tiesa/ldap": "1.0.*@dev",
+        "tiesa/ldap": "@dev",
         "yiisoft/yii2": "*"
     },
     "autoload": {
