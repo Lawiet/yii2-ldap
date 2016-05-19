@@ -11,8 +11,10 @@
         }
     ],
     "require": {
-        "tiesa/ldap": "@dev",
-        "yiisoft/yii2": "*"
+        "php": ">=5.3.0",
+        "ext-ldap": "*",
+        "tiesa/ldap": "~1.0",
+        "yiisoft/yii2": "2.*"
     },
     "autoload": {
         "psr-4": {
