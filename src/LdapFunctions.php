@@ -4,7 +4,7 @@
  * @package yii2-ldap
  * @version 1.0.0
  */
-namespace lawiet\ldap;
+namespace lawiet\ldap\src;
 
 use yii;
 use yii\base\Component;
@@ -50,14 +50,18 @@ class LdapFunctions extends Component {
 			'password' => 'admin',
 			'base_dn' => 'dc=example,dc=org',
 			'filter'  => '(&(objectClass=*))',
-			'user_base_dn' => 'cn=user,dc=example,dc=org',
-			'user_filter' => '(&(objectClass=inetOrgPerson))',
-			'user_name_attribute' => 'uid',
-			'user_attributes' => '*',
-			'group_base_dn' => 'cn=group,dc=example,dc=org',
-			'group_filter' => '(&(objectClass=*))',
-			'group_name_attribute' => 'uid',
-			'group_user_attribute' => '*',
+			'user_options' => [
+				'base_dn' => 'cn=user,dc=example,dc=org',
+				'filter' => '(&(objectClass=inetOrgPerson))',
+				'name_attribute' => 'uid',
+				'attributes' => '*',
+			],
+			'group_options' => [
+				'base_dn' => 'cn=group,dc=example,dc=org',
+				'filter' => '(&(objectClass=*))',
+				'name_attribute' => 'uid',
+				'attributes' => '*',
+			],
 			'options' => [
 				LDAP_OPT_NETWORK_TIMEOUT => 30,
 				LDAP_OPT_PROTOCOL_VERSION => 3,
@@ -113,12 +117,12 @@ class LdapFunctions extends Component {
 	}
 
 	/**
-	 * _setFilter($filter, $filter_option).
+	 * _getDefault($default, $default_option).
 	 */
-	private function _setFilter($filter, $filter_option){
-		$filter = ($filter_option == 'default') ? $filter : $filter_option ;
+	private function _getDefault($default, $default_option){
+		$default = ($default_option == 'default') ? $default : $default_option ;
 
-		return $filter;
+		return $default;
 	}
 
 	/**
@@ -139,7 +143,7 @@ class LdapFunctions extends Component {
 	 */
 	private function _connect($tiesaManagerClass){
 		try {
-			$tiesaManagerClass->connect();
+			@$tiesaManagerClass->connect();
 			return $tiesaManagerClass;
 		} catch (Exception $e) {
 			$this->ldapError = $e;
@@ -154,15 +158,15 @@ class LdapFunctions extends Component {
 		try {
 			if($user && $pass){
 				$user = $this->_setDn($user, $this->options['base_dn'], $dn);
-				$tiesaManagerClass->bind($user, $pass);
+				@$tiesaManagerClass->bind($user, $pass);
 			}else if($this->options['bind_dn'] && $this->options['bind_password']){
 				$user = $this->_setDn($this->options['bind_dn'], $this->options['base_dn'], $dn);
-				$tiesaManagerClass->bind($user, $this->options['bind_password']);
+				@$tiesaManagerClass->bind($user, $this->options['bind_password']);
 			}else if($this->options['username'] && $this->options['password']){
 				$user = $this->_setDn($this->options['username'], $this->options['base_dn'], $dn);
-				$tiesaManagerClass->bind($user, $this->options['password']);
+				@$tiesaManagerClass->bind($user, $this->options['password']);
 			}else
-				$tiesaManagerClass->bind();
+				@$tiesaManagerClass->bind();
 
 			return $tiesaManagerClass;
 		} catch (Exception $e) {

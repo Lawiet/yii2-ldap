@@ -6,7 +6,7 @@
  */
 namespace lawiet\ldap;
 
-use lawiet\ldap\LdapFunctions;
+use lawiet\ldap\src\LdapFunctions;
 use Toyota\Component\Ldap\API\SearchInterface as Search;
 
 /**
@@ -76,7 +76,8 @@ class Ldap extends LdapFunctions {
 	 */
 	public function autentication($user = false, $pass = false, $dn = 'default')
 	{
-		$dn = $this->_setFilter($this->options['user_base_dn'], $dn);
+        $options = $this->options['user_options'];
+		$dn = $this->_getDefault($options['base_dn'], $dn);
 		$tiesaManagerClass = $this->_getAutentication($user, $pass, $dn);
 
 		return ($tiesaManagerClass) ? true : false ;
@@ -90,7 +91,8 @@ class Ldap extends LdapFunctions {
 			if(!$this->tiesaManagerClass)
 				$this->_autentication();
 
-			$user = $this->_setDn($user, $this->options['user_base_dn'], $dn);
+             $options = $this->options['user_options'];
+			$user = $this->_setDn($user, $options['base_dn'], $dn);
 
 			return $this->tiesaManagerClass->getNode($user);
 		} catch (Exception $e) {
@@ -107,8 +109,9 @@ class Ldap extends LdapFunctions {
 			if(!$this->tiesaManagerClass)
 				$this->_autentication();
 
-			$user = $this->_setDn($user, $this->options['user_base_dn'], $dn);
-			$filter = $this->_setFilter($this->options['user_filter'], $filter);
+            $options = $this->options['user_options'];
+			$user = $this->_setDn($user, $options['base_dn'], $dn);
+			$filter = $this->_getDefault($options['filter'], $filter);
 
 			return $this->tiesaManagerClass->search(Search::SCOPE_ALL, $user, $filter);
 		} catch (Exception $e) {
@@ -125,7 +128,8 @@ class Ldap extends LdapFunctions {
 			if(!$this->tiesaManagerClass)
 				$this->_autentication();
 
-			$group = $this->_setDn($group, $this->options['group_base_dn'], $dn);
+            $options = $this->options['group_options'];
+			$group = $this->_setDn($group, $options['base_dn'], $dn);
 
 			return $this->tiesaManagerClass->getNode($group);
 		} catch (Exception $e) {
@@ -142,8 +146,9 @@ class Ldap extends LdapFunctions {
             if(!$this->tiesaManagerClass)
                 $this->_autentication();
 
-            $group = $this->_setDn($group, $this->options['group_base_dn'], $dn);
-            $filter = $this->_setFilter($this->options['group_filter'], $filter);
+            $options = $this->options['group_options'];
+            $group = $this->_setDn($group, $options['base_dn'], $dn);
+            $filter = $this->_getDefault($options['filter'], $filter);
 
             return $this->tiesaManagerClass->search(Search::SCOPE_ALL, $group, $filter);
         } catch (Exception $e) {
@@ -151,23 +156,6 @@ class Ldap extends LdapFunctions {
             return false;
         }
     }
-	/**
-	 * autentication($user, $dn, $filter)
-	 */
-	public function searchGroup($group = 'uid=0', $dn = 'default', $filter = 'default'){
-		try {
-			if(!$this->tiesaManagerClass)
-				$this->_autentication();
-
-			$group = $this->_setDn($group, $this->options['group_base_dn'], $dn);
-			$filter = $this->_setFilter($this->options['group_filter'], $filter);
-
-			return $this->tiesaManagerClass->search(Search::SCOPE_ALL, $group, $filter);
-		} catch (Exception $e) {
-			$this->ldapError = $e;
-			return false;
-		}
-	}
 
 	/**
 	 * Use magic PHP function __call to route function calls to the tiesaldap class.
