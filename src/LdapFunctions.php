@@ -240,7 +240,7 @@ class LdapFunctions extends Component {
             if(!$this->tiesaManagerClass)
                 $this->_autentication();
 
-            return $this->tiesaManagerClass->getNode($user);
+            return $this->tiesaManagerClass->getNode($node);
         } catch (\Exception $e) {
             $this->ldapError = $e;
             return false;
