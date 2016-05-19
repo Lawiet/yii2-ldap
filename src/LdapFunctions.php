@@ -175,6 +175,36 @@ class LdapFunctions extends Component {
 	}
 
 	/**
+	 * _getNode($node).
+	 */
+	protected function _getNode($node = false){
+		try {
+			if(!$this->tiesaManagerClass)
+				$this->_autentication();
+
+			return $this->tiesaManagerClass->getNode($user);
+		} catch (\Exception $e) {
+			$this->ldapError = $e;
+			return false;
+		}
+	}
+
+	/**
+	 * _getNode($user, $filter).
+	 */
+	protected function _search($user = false, $filter){
+		try {
+			if(!$this->tiesaManagerClass)
+				$this->_autentication();
+
+			return $this->tiesaManagerClass->search(Search::SCOPE_ALL, $user, $filter);
+		} catch (\Exception $e) {
+			$this->ldapError = $e;
+			return false;
+		}
+	}
+
+	/**
 	 * _getAutentication($user, $pass, $dn)
 	 */
 	protected function _getAutentication($user = false, $pass = false, $dn = 'default')
