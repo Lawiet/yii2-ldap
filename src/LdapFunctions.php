@@ -126,9 +126,9 @@ class LdapFunctions extends Component {
 	}
 
 	/**
-	 * _getAutentication().
+	 * _manager().
 	 */
-	private function _getAutentication(){
+	private function _manager(){
 		try {
 			$tiesaManagerClass = new Manager($this->options, new Driver());
 			return $tiesaManagerClass;
