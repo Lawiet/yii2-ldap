@@ -25,9 +25,9 @@ class LdapFunctions extends Component {
 	 *
 	 * @var object tiesaManager
 	 */
-	private $tiesaManagerClass = null;
+	protected $tiesaManagerClass = null;
 
-	private $ldapError = false;
+	protected $ldapError = false;
 
 	/**
 	 * Options variable for the tiesaldap module.
@@ -40,7 +40,7 @@ class LdapFunctions extends Component {
 	/**
 	 * Options values default.
 	 */
-	private $default = [
+	protected $default = [
 			'hostname' => '127.0.0.1',
 			'port' => 389,
 			'bind_dn' => false,
@@ -71,7 +71,7 @@ class LdapFunctions extends Component {
 	/**
 	 * _initializate().
 	 */
-	private function _initializate()
+	protected function _initializate()
 	{
 		try {
 			$this->options = $this->_setDefault($this->default, $this->options);
@@ -88,7 +88,7 @@ class LdapFunctions extends Component {
 	/**
 	 * _setDefault($getDefault, $setOptions).
 	 */
-	private function _setDefault($getDefault, $setOptions){
+	protected function _setDefault($getDefault, $setOptions){
 		foreach ($setOptions as $key => $value){
 			if(isset($setOptions[$key])){
 				if(count($setOptions[$key])>0){
@@ -108,7 +108,7 @@ class LdapFunctions extends Component {
 	/**
 	 * _setDn($dn, $_dn, $dn_option).
 	 */
-	private function _setDn($dn, $_dn, $dn_option){
+	protected function _setDn($dn, $_dn, $dn_option){
 		$_dn = ($dn_option == 'default') ? $_dn : $dn_option ;
 		$dn = ($_dn) ? $dn . ',' . $_dn : $dn ;
 
@@ -118,7 +118,7 @@ class LdapFunctions extends Component {
 	/**
 	 * _getDefault($default, $default_option).
 	 */
-	private function _getDefault($default, $default_option){
+	protected function _getDefault($default, $default_option){
 		$default = ($default_option == 'default') ? $default : $default_option ;
 
 		return $default;
@@ -127,7 +127,7 @@ class LdapFunctions extends Component {
 	/**
 	 * _manager().
 	 */
-	private function _manager(){
+	protected function _manager(){
 		try {
 			$tiesaManagerClass = new Manager($this->options, new Driver());
 			return $tiesaManagerClass;
@@ -140,7 +140,7 @@ class LdapFunctions extends Component {
 	/**
 	 * _connect($tiesaManagerClass).
 	 */
-	private function _connect($tiesaManagerClass){
+	protected function _connect($tiesaManagerClass){
 		try {
 			@$tiesaManagerClass->connect();
 			return $tiesaManagerClass;
@@ -153,7 +153,7 @@ class LdapFunctions extends Component {
 	/**
 	 * _bind($tiesaManagerClass, $user, $pass, $dn).
 	 */
-	private function _bind($tiesaManagerClass, $user = false, $pass = false, $dn = 'default'){
+	protected function _bind($tiesaManagerClass, $user = false, $pass = false, $dn = 'default'){
 		try {
 			if($user && $pass){
 				$user = $this->_setDn($user, $this->options['base_dn'], $dn);
@@ -177,7 +177,7 @@ class LdapFunctions extends Component {
 	/**
 	 * _getAutentication($user, $pass, $dn)
 	 */
-	private function _getAutentication($user = false, $pass = false, $dn = 'default')
+	protected function _getAutentication($user = false, $pass = false, $dn = 'default')
 	{
 		$tiesaManagerClass = $this->_manager();
 
@@ -193,7 +193,7 @@ class LdapFunctions extends Component {
 	/**
 	 * _autentication($user, $pass, $dn).
 	 */
-	private function _autentication($user = false, $pass = false, $dn = 'default')
+	protected function _autentication($user = false, $pass = false, $dn = 'default')
 	{
 		$tiesaManagerClass = $this->_getAutentication($user, $pass, $dn);
 		$this->tiesaManagerClass = ($tiesaManagerClass) ? $tiesaManagerClass : false ;
