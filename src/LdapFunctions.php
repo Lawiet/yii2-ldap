@@ -92,15 +92,15 @@ class LdapFunctions extends Component {
 		foreach ($setOptions as $key => $value){
 			if(isset($setOptions[$key])){
 				if(count($setOptions[$key])>0){
-					if(is_array($value)){
-						$getDefault[$key] = array_merge($getDefault[$key], $setOptions[$key]);
-					}
-				}else
+					if(is_array($value))
+						$getDefault[$key] = $this->_setDefault($getDefault[$key], $setOptions[$key]);
+					else
+						$getDefault[$key] = $setOptions[$key];
+				}else{
 					unset($setOptions[$key]);
+				}
 			}
 		}
-
-		$getDefault = array_merge($getDefault, $setOptions);
 
 		return $getDefault;
 	}
