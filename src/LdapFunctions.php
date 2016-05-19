@@ -79,7 +79,7 @@ class LdapFunctions extends Component {
 			$user = isset($this->options['username']) ? $this->options['username'] : (isset($this->options['bind_dn']) ? $this->options['bind_dn'] : false );
 			$password = isset($this->options['password']) ? $this->options['password'] : (isset($this->options['bind_password']) ? $this->options['bind_password'] : false );
 			$this->_autentication($user, $password);
-		} catch (Exception $e) {
+		} catch (\Exception $e) {
 			$this->ldapError = $e;
 			return false;
 		}
@@ -131,7 +131,7 @@ class LdapFunctions extends Component {
 		try {
 			$tiesaManagerClass = new Manager($this->options, new Driver());
 			return $tiesaManagerClass;
-		} catch (Exception $e) {
+		} catch (\Exception $e) {
 			$this->ldapError = $e;
 			return false;
 		}
@@ -142,9 +142,9 @@ class LdapFunctions extends Component {
 	 */
 	protected function _connect($tiesaManagerClass){
 		try {
-			@$tiesaManagerClass->connect();
+			$tiesaManagerClass->connect();
 			return $tiesaManagerClass;
-		} catch (Exception $e) {
+		} catch (\Exception $e) {
 			$this->ldapError = $e;
 			return false;
 		}
@@ -157,18 +157,18 @@ class LdapFunctions extends Component {
 		try {
 			if($user && $pass){
 				$user = $this->_setDn($user, $this->options['base_dn'], $dn);
-				@$tiesaManagerClass->bind($user, $pass);
+				$tiesaManagerClass->bind($user, $pass);
 			}else if($this->options['bind_dn'] && $this->options['bind_password']){
 				$user = $this->_setDn($this->options['bind_dn'], $this->options['base_dn'], $dn);
-				@$tiesaManagerClass->bind($user, $this->options['bind_password']);
+				$tiesaManagerClass->bind($user, $this->options['bind_password']);
 			}else if($this->options['username'] && $this->options['password']){
 				$user = $this->_setDn($this->options['username'], $this->options['base_dn'], $dn);
-				@$tiesaManagerClass->bind($user, $this->options['password']);
+				$tiesaManagerClass->bind($user, $this->options['password']);
 			}else
-				@$tiesaManagerClass->bind();
+				$tiesaManagerClass->bind();
 
 			return $tiesaManagerClass;
-		} catch (Exception $e) {
+		} catch (\Exception $e) {
 			$this->ldapError = $e;
 			return false;
 		}
