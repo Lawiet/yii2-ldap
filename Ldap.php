@@ -6,6 +6,7 @@
  */
 namespace lawiet\ldap;
 
+use yii;
 use lawiet\ldap\src\LdapFunctions;
 use Toyota\Component\Ldap\API\SearchInterface as Search;
 

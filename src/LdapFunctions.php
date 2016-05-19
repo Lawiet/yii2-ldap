@@ -6,7 +6,6 @@
  */
 namespace lawiet\ldap\src;
 
-use yii;
 use yii\base\Component;
 use Toyota\Component\Ldap\Core\Manager;
 use Toyota\Component\Ldap\Platform\Native\Driver;
