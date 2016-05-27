@@ -109,6 +109,8 @@ class Ldap extends LdapFunctions {
         $node = $this->_newNode($user);
         $node = $this->setInNode($node, 'objectClass', ['top', 'person', 'organizationalPerson', 'inetOrgPerson', 'posixAccount', 'shadowAccount']);
         $node = $this->setInNode($node, 'homeDirectory', '/home/users/' . $user);
+        if($node)
+            $this->ldapError = '';
 
         return $node;
     }
@@ -135,20 +137,22 @@ class Ldap extends LdapFunctions {
     }
 
     /**
-     * newGroup($user, $dn)
+     * newGroup($group, $dn)
      */
-    public function newGroup($user = 'uid=0', $dn = 'default'){
+    public function newGroup($group = 'uid=0', $dn = 'default'){
         $options = $this->options['group_options'];
-        $user = $this->_setDn($user, $options['base_dn'], $dn);
+        $group = $this->_setDn($group, $options['base_dn'], $dn);
 
-        $node = $this->_newNode($user);
+        $node = $this->_newNode($group);
         $node = $this->setInNode($node, 'objectClass', ['top', 'posixGroup', 'shadowAccount']);
+        if($node)
+            $this->ldapError = '';
 
         return $node;
     }
 
     /**
-     * getGroup($user, $dn)
+     * getGroup($group, $dn)
      */
     public function getGroup($group = 'uid=0', $dn = 'default'){
         $options = $this->options['group_options'];

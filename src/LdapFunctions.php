@@ -179,23 +179,28 @@ class LdapFunctions extends Component {
     /**
      * _newNode($node).
      */
-    protected function _setInNode($node = false, $object=false, $value){
+    protected function _setInNode($node = null, $object=null, $value){
         try {
-            if($node->has($object)){
-                $attribute = $node->get($object)->getValues();
-                if(is_array($value)){
-                    if(count($_object)>1)
-                        $value = array_merge($attribute, $value);
+            if(is_callable([$node, 'has'], true, $nombre_a_llamar))
+                if($node->has($object)){
+                    $attribute = $node->get($object)->getValues();
+                    if(is_array($value)){
+                        if(count($object)>1)
+                            $value = array_merge($attribute, $value);
 
-                    $node->get($object)->add($value);
+                        $node->get($object)->add($value);
+                    }else{
+                        $node->get($object)->set($value);
+                    }
                 }else{
-                    $node->get($object)->set($value);
+                    if(is_array($value))
+                        $node->get($object, true)->add($value);
+                    else
+                        $node->get($object, true)->set($value);
                 }
-            }else{
-                if(is_array($value))
-                    $node->get($object, true)->add($value);
-                else
-                    $node->get($object, true)->set($value);
+            else{
+                $this->ldapError = 'Nodo fallido';
+                return $node;
             }
 
             return $node;
