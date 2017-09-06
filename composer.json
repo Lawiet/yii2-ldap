@@ -1,6 +1,6 @@
 {
     "name": "lawiet/yii2-ldap",
-    "description": ".",
+    "description": "LDAP extension for Yii2",
     "type": "yii2-extension",
     "keywords": ["yii2","extension","component","ldap"],
     "license": "MIT",
